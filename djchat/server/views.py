@@ -1,6 +1,6 @@
 from rest_framework.exceptions import ValidationError, AuthenticationFailed
-from django.shortcuts import render
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db.models import Count
 
@@ -30,6 +30,7 @@ class ServerListViewSet(viewsets.ViewSet):
     """
 
     queryset = Server.objects.all()
+    # permission_classes = [IsAuthenticated]
 
     @server_list_docs
     def list(self, request):
