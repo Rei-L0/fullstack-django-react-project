@@ -34,11 +34,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
     "django.contrib.auth",
+    "django.contrib.admin",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "daphne",
     "django.contrib.staticfiles",
     # External
     "drf_spectacular",
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     # Internal
     "account",
     "server",
+    "webchat",
 ]
 
 MIDDLEWARE = [
@@ -155,3 +157,5 @@ SPECTACULAR_SETTINGS = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
 ]
+
+CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}

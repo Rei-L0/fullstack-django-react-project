@@ -3,10 +3,20 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db.models import Count
+from drf_spectacular.utils import extend_schema
 
 from .schema import server_list_docs
-from .serializer import ServerSerializer
-from .models import Server
+from .serializer import ServerSerializer, CategorySerializer
+from .models import Category, Server
+
+
+class CategoryListViewSet(viewsets.ViewSet):
+    queryset = Category.objects.all()
+
+    @extend_schema(responses=CategorySerializer)
+    def list(self, request):
+        serializer = CategorySerializer(self.queryset, many=True)
+        return Response(serializer.data)
 
 
 class ServerListViewSet(viewsets.ViewSet):
@@ -104,8 +114,8 @@ class ServerListViewSet(viewsets.ViewSet):
 
         # Filter and validate by server id
         if by_serverid:
-            if not request.user.is_authenticated:
-                raise AuthenticationFailed()
+            # if not request.user.is_authenticated:
+            # raise AuthenticationFailed()
 
             try:
                 self.queryset = self.queryset.filter(id=by_serverid)
